@@ -1,6 +1,6 @@
-import { Card, CardContent, Button, Typography, Stack } from "@mui/material";
+import { Card, CardContent, Typography, Button } from "@mui/material";
 
- function WalletBalance({ wallet, onAddIncome, onAddExpense }) {
+ function WalletBalance({ wallet, onAddIncome }) {
   return (
     <Card>
       <CardContent>
@@ -8,15 +8,14 @@ import { Card, CardContent, Button, Typography, Stack } from "@mui/material";
           Wallet Balance: ₹{wallet.toFixed(2)}
         </Typography>
 
-        <Stack direction="row" spacing={2} mt={2}>
-          <Button variant="contained" onClick={onAddIncome}>
-            + Add Income
-          </Button>
-
-          <Button variant="outlined" onClick={onAddExpense}>
-            + Add Expense
-          </Button>
-        </Stack>
+        <Button
+          type="button"
+          variant="contained"
+          onClick={onAddIncome}
+          sx={{ mt: 2 }}
+        >
+          + Add Income
+        </Button>
       </CardContent>
     </Card>
   );

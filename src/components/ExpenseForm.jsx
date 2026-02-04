@@ -1,89 +1,81 @@
 import { useState } from "react";
-import { v4 as uuid } from "uuid";
-import {
-  Button,
-  TextField,
-  MenuItem,
-  Typography,
-  Stack
-} from "@mui/material";
+import { Button } from "@mui/material";
 
- function ExpenseForm({ onAdd, onClose }) {
-  const [form, setForm] = useState({
-    title: "",
-    price: "",
-    category: "",
-    date: ""
-  });
+function ExpenseForm({ onAdd }) {
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState("");
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!form.title || !form.price || !form.category || !form.date) return;
+    if (!title || !price || !category || !date) return;
 
     const success = onAdd({
-      ...form,
-      id: uuid(),
-      price: Number(form.price)
+      id: Date.now(),
+      title,
+      price: Number(price),
+      category,
+      date,
     });
 
     if (success) {
-      setForm({ title: "", price: "", category: "", date: "" });
-      onClose();
+      setTitle("");
+      setPrice("");
+      setCategory("");
+      setDate("");
     }
   };
 
   return (
-    <form onSubmit={submit}>
-      <Typography variant="h6" gutterBottom>
-        Edit Expenses
-      </Typography>
-
-      <Stack spacing={2}>
-        <TextField
+    <form onSubmit={handleSubmit}>
+      <div
+        style={{
+          display: "flex",
+          gap: "12px",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <input
           name="title"
-          label="Title"
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
 
-        <TextField
+        <input
           name="price"
           type="number"
-          label="Price"
-          value={form.price}
-          onChange={(e) => setForm({ ...form, price: e.target.value })}
+          placeholder="Amount"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
         />
 
-        <TextField
-          select
+        <select
           name="category"
-          label="Category"
-          value={form.category}
-          onChange={(e) => setForm({ ...form, category: e.target.value })}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
         >
-          <MenuItem value="Food">Food</MenuItem>
-          <MenuItem value="Travel">Travel</MenuItem>
-          <MenuItem value="Entertainment">Entertainment</MenuItem>
-        </TextField>
+          <option value="">Select Category</option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Entertainment">Entertainment</option>
+        </select>
 
-        <TextField
+        <input
           name="date"
           type="date"
-          label="Date"
-          InputLabelProps={{ shrink: true }}
-          value={form.date}
-          onChange={(e) => setForm({ ...form, date: e.target.value })}
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
 
-        <Stack direction="row" spacing={2}>
-          <Button type="submit" variant="contained">
-            Add Expense
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
-        </Stack>
-      </Stack>
+        <Button type="submit" variant="contained">
+          Add Expense
+        </Button>
+      </div>
     </form>
   );
 }
-export default ExpenseForm
+
+export default ExpenseForm;

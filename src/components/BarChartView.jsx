@@ -1,10 +1,16 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip
+} from "recharts";
 
  function BarChartView({ expenses }) {
   const data = Object.values(
     expenses.reduce((acc, e) => {
       acc[e.category] = acc[e.category] || {
-        category: e.category,
+        name: e.category,
         amount: 0
       };
       acc[e.category].amount += e.price;
@@ -13,15 +19,12 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
   );
 
   return (
-    <div>
-      <h2>Expense Trends</h2>
-      <BarChart width={350} height={250} data={data}>
-        <XAxis dataKey="category" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="amount" />
-      </BarChart>
-    </div>
+    <BarChart width={500} height={300} data={data}>
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="amount" />
+    </BarChart>
   );
 }
 export default BarChartView

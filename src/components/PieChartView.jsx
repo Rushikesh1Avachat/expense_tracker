@@ -1,4 +1,4 @@
-import { PieChart, Pie, Tooltip, Cell } from "recharts";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
  function PieChartView({ expenses }) {
   const data = Object.values(
@@ -13,17 +13,10 @@ import { PieChart, Pie, Tooltip, Cell } from "recharts";
   );
 
   return (
-    <div>
-      <h2>Expense Summary</h2>
-      <PieChart width={300} height={300}>
-        <Pie data={data} dataKey="value" nameKey="name">
-          {data.map((_, i) => (
-            <Cell key={i} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
-    </div>
+    <PieChart width={300} height={300}>
+      <Pie data={data} dataKey="value" nameKey="name" />
+      <Tooltip />
+    </PieChart>
   );
 }
 export default PieChartView

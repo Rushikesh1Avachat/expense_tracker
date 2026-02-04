@@ -1,31 +1,31 @@
 import { useState } from "react";
+import { Button, TextField } from "@mui/material";
 
-function IncomeForm({ onAdd, onClose }) {
+ function IncomeForm({ onAdd, onClose }) {
   const [amount, setAmount] = useState("");
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!amount) return;
+
     onAdd(Number(amount));
     setAmount("");
     onClose();
   };
 
   return (
-    <form onSubmit={submit} className="modal-form">
-      <h2>Add Balance</h2>
-
-      <input
+    <form onSubmit={handleSubmit}>
+      <TextField
         type="number"
         placeholder="Income Amount"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
+        fullWidth
       />
 
-      <button type="submit">Add Balance</button>
-      <button type="button" onClick={onClose}>
-        Cancel
-      </button>
+      <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+        Add Balance
+      </Button>
     </form>
   );
 }

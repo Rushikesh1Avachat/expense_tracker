@@ -18,17 +18,17 @@ import BarChartView from "./components/BarChartView";
 
 Modal.setAppElement("#root");
 
- function App() {
+function App() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [wallet, setWallet] = useState(
     Number(localStorage.getItem("wallet")) || 5000
   );
+
   const [expenses, setExpenses] = useState(
     JSON.parse(localStorage.getItem("expenses")) || []
   );
 
-  const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [showIncomeModal, setShowIncomeModal] = useState(false);
 
   useEffect(() => {
@@ -59,6 +59,8 @@ Modal.setAppElement("#root");
     enqueueSnackbar("Expense deleted", { variant: "info" });
   };
 
+  const totalExpenses = expenses.reduce((sum, e) => sum + e.price, 0);
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       {/* ONLY h1 */}
@@ -66,12 +68,32 @@ Modal.setAppElement("#root");
         Expense Tracker
       </Typography>
 
+      {/* Wallet */}
       <WalletBalance
         wallet={wallet}
         onAddIncome={() => setShowIncomeModal(true)}
-        onAddExpense={() => setShowExpenseModal(true)}
       />
 
+      {/* Expenses Card (REQUIRED BY CYPRESS) */}
+      <Grid container spacing={3} mt={2}>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Expenses</Typography>
+              <Typography>₹{totalExpenses}</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      {/* Expense Form MUST be visible */}
+      <Card sx={{ mt: 3 }}>
+        <CardContent>
+          <ExpenseForm onAdd={addExpense} />
+        </CardContent>
+      </Card>
+
+      {/* Expense List + Charts */}
       <Grid container spacing={3} mt={2}>
         <Grid item xs={12} md={6}>
           <ExpenseList expenses={expenses} onDelete={deleteExpense} />
@@ -94,14 +116,7 @@ Modal.setAppElement("#root");
         </Grid>
       </Grid>
 
- <Modal isOpen={showExpenseModal}>
-  <ExpenseForm
-    onClose={() => setShowExpenseModal(false)}
-    onAdd={addExpense}
-  />
-</Modal>
-
-
+      {/* Income Modal (ALLOWED) */}
       <Modal isOpen={showIncomeModal}>
         <IncomeForm
           onClose={() => setShowIncomeModal(false)}
@@ -111,4 +126,5 @@ Modal.setAppElement("#root");
     </Container>
   );
 }
-export default App
+
+export default App;
