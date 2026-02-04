@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { PieChart, Pie,  Tooltip } from "recharts";
 
  function PieChartView({ expenses }) {
   const data = Object.values(
