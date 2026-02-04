@@ -1,26 +1,35 @@
-import { Card, CardContent, Button } from "@mui/material";
+import React from "react";
+import { Card, CardContent, Typography, IconButton, List, ListItem, ListItemText } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
- function ExpenseList({ expenses, onDelete }) {
+const ExpenseList = ({ expenses, onDelete }) => {
+  if (!expenses.length) return null;
+
   return (
     <Card>
       <CardContent>
-        {expenses.map((e) => (
-          <div key={e.id} data-testid="expense-item">
-            <span>{e.title}</span> |{" "}
-            <span>{e.category}</span> |{" "}
-            <span>₹{e.price}</span>
-
-            <Button
-              size="small"
-              color="error"
-              onClick={() => onDelete(e.id)}
-            >
-              Delete
-            </Button>
-          </div>
-        ))}
+        <Typography variant="h6" gutterBottom>
+          Expense List
+        </Typography>
+        <List>
+          {expenses.map((e) => (
+            <ListItem key={e.id} secondaryAction={
+              <IconButton edge="end" onClick={() => onDelete(e.id)}>
+                <DeleteIcon />
+              </IconButton>
+            }>
+              <ListItemText
+                primary={`${e.title} - ₹${e.price}`}
+                secondary={e.category}
+              />
+            </ListItem>
+          ))}
+        </List>
       </CardContent>
     </Card>
   );
-}
-export default ExpenseList
+};
+
+export default ExpenseList;
+
+

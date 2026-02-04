@@ -1,23 +1,21 @@
-import { Card, CardContent, Typography, Button } from "@mui/material";
+import React from "react";
+import { Card, CardContent, Typography, Button, Box } from "@mui/material";
 
- function WalletBalance({ wallet, onAddIncome }) {
+const WalletBalance = ({ wallet, onAddIncome }) => {
   return (
-    <Card>
+    <Card sx={{ mt: 2 }}>
       <CardContent>
-        <Typography variant="h6">
-          Wallet Balance: ₹{wallet.toFixed(2)}
-        </Typography>
-
-        <Button
-          type="button"
-          variant="contained"
-          onClick={onAddIncome}
-          sx={{ mt: 2 }}
-        >
-          + Add Income
-        </Button>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h6">Wallet Balance: ₹{wallet}</Typography>
+          <Button variant="contained" color="primary" type="button" onClick={onAddIncome}>
+            + Add Income
+          </Button>
+        </Box>
       </CardContent>
     </Card>
   );
-}
-export default WalletBalance
+};
+
+export default WalletBalance;
+
+
