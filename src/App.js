@@ -1,5 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Container, Grid, Card, CardContent, Typography, Box, Dialog, DialogTitle, DialogContent } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
 import { useSnackbar } from "notistack";
 
 import WalletBalance from "./components/WalletBalance";
@@ -12,21 +23,30 @@ import BarChartView from "./components/BarChartView";
 function App() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const [wallet, setWallet] = useState(Number(localStorage.getItem("wallet")) || 5000);
-  const [expenses, setExpenses] = useState(JSON.parse(localStorage.getItem("expenses")) || []);
+  // Wallet and Expenses state with localStorage initialization
+  const [wallet, setWallet] = useState(
+    Number(localStorage.getItem("wallet")) || 5000
+  );
+  const [expenses, setExpenses] = useState(
+    JSON.parse(localStorage.getItem("expenses")) || []
+  );
+
   const [showIncomeModal, setShowIncomeModal] = useState(false);
   const [showExpenseModal, setShowExpenseModal] = useState(false);
 
+  // Persist wallet and expenses to localStorage
   useEffect(() => {
     localStorage.setItem("wallet", wallet);
     localStorage.setItem("expenses", JSON.stringify(expenses));
   }, [wallet, expenses]);
 
+  // Add income function
   const addIncome = (amount) => {
     setWallet(wallet + amount);
     enqueueSnackbar("Income added", { variant: "success" });
   };
 
+  // Add expense function
   const addExpense = (expense) => {
     if (expense.price > wallet) {
       enqueueSnackbar("Insufficient wallet balance", { variant: "error" });
@@ -39,6 +59,7 @@ function App() {
     return true;
   };
 
+  // Delete expense function
   const deleteExpense = (id) => {
     const exp = expenses.find((e) => e.id === id);
     setWallet(wallet + exp.price);
@@ -46,10 +67,12 @@ function App() {
     enqueueSnackbar("Expense deleted", { variant: "info" });
   };
 
+  // Calculate total expenses
   const totalExpenses = expenses.reduce((sum, e) => sum + e.price, 0);
 
   return (
     <Container maxWidth="md">
+      {/* App Header */}
       <Typography variant="h4" component="h1" align="center" gutterBottom>
         Expense Tracker
       </Typography>
@@ -57,7 +80,7 @@ function App() {
       {/* Wallet Balance */}
       <WalletBalance wallet={wallet} onAddIncome={() => setShowIncomeModal(true)} />
 
-      {/* Total Expenses */}
+      {/* Total Expenses Card */}
       <Grid container spacing={2} sx={{ mt: 2 }}>
         <Grid item xs={12} sm={6}>
           <Card>
@@ -71,20 +94,14 @@ function App() {
 
       {/* Add Expense Button */}
       <Box sx={{ mt: 3, textAlign: "center" }}>
-        <button
+        <Button
+          variant="contained"
+          color="success"
           type="button"
           onClick={() => setShowExpenseModal(true)}
-          style={{
-            padding: "0.5rem 1rem",
-            backgroundColor: "#4caf50",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
         >
           + Add Expense
-        </button>
+        </Button>
       </Box>
 
       {/* Expense Modal */}
@@ -131,6 +148,8 @@ function App() {
 }
 
 export default App;
+
+
 
 
 
