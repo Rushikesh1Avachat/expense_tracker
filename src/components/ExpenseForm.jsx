@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Grid, TextField, MenuItem, Button } from "@mui/material";
 
 const categories = ["Food", "Travel", "Entertainment"];
 
@@ -28,57 +27,62 @@ const ExpenseForm = ({ onAdd }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="title"
-            label="Expense Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="price"
-            label="Price"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="category"
-            label="Category"
-            select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            fullWidth
-            required
-          >
-            {categories.map((c) => (
-              <MenuItem key={c} value={c}>
-                {c}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        <input
+          type="text"
+          name="title"
+          placeholder="Expense Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          style={{ flex: 1, padding: "0.5rem" }}
+        />
 
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained" fullWidth>
-            Add Expense
-          </Button>
-        </Grid>
-      </Grid>
+        <input
+          type="number"
+          name="price"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+          style={{ flex: 1, padding: "0.5rem" }}
+        />
+
+        <select
+          name="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+          style={{ flex: 1, padding: "0.5rem" }}
+        >
+          <option value="">Select Category</option>
+          {categories.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+
+        <button
+          type="submit"
+          style={{
+            flex: "1 0 100%",
+            padding: "0.5rem",
+            backgroundColor: "#1976d2",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          + Add Expense
+        </button>
+      </div>
     </form>
   );
 };
 
 export default ExpenseForm;
+
 
 
 

@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { Grid, TextField, Button } from "@mui/material";
+import React, { useState } from "react";
 
-function IncomeForm({ onAdd, onClose }) {
+const IncomeForm = ({ onAdd, onClose }) => {
   const [amount, setAmount] = useState("");
 
   const handleSubmit = (e) => {
@@ -14,27 +13,34 @@ function IncomeForm({ onAdd, onClose }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            type="number"
-            placeholder="Income Amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            fullWidth
-            required
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained" fullWidth>
-            Add Balance
-          </Button>
-        </Grid>
-      </Grid>
+    <form onSubmit={handleSubmit} style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      <input
+        type="number"
+        name="income"
+        placeholder="Income Amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        required
+        style={{ flex: 1, padding: "0.5rem" }}
+      />
+
+      <button
+        type="submit"
+        style={{
+          flex: "1 0 100%",
+          padding: "0.5rem",
+          backgroundColor: "#1976d2",
+          color: "white",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        Add Balance
+      </button>
     </form>
   );
-}
+};
 
 export default IncomeForm;
+
 

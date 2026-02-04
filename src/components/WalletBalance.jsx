@@ -1,21 +1,39 @@
 import React from "react";
-import { Card, CardContent, Typography, Button, Box } from "@mui/material";
 
 const WalletBalance = ({ wallet, onAddIncome }) => {
   return (
-    <Card sx={{ mt: 2 }}>
-      <CardContent>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h6">Wallet Balance: ₹{wallet}</Typography>
-          <Button variant="contained" color="primary" type="button" onClick={onAddIncome}>
-            + Add Income
-          </Button>
-        </Box>
-      </CardContent>
-    </Card>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "1rem",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        marginTop: "1rem",
+      }}
+    >
+      <h2>Wallet Balance: ₹{wallet}</h2>
+
+      <button
+        type="button"
+        onClick={onAddIncome}
+        style={{
+          padding: "0.5rem 1rem",
+          backgroundColor: "#4caf50",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+      >
+        + Add Income
+      </button>
+    </div>
   );
 };
 
 export default WalletBalance;
+
 
 

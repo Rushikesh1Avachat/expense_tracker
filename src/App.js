@@ -1,16 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Container, Grid, Card, CardContent, Typography, Box, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import { useSnackbar } from "notistack";
 
 import WalletBalance from "./components/WalletBalance";
@@ -23,13 +12,8 @@ import BarChartView from "./components/BarChartView";
 function App() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const [wallet, setWallet] = useState(
-    Number(localStorage.getItem("wallet")) || 5000
-  );
-  const [expenses, setExpenses] = useState(
-    JSON.parse(localStorage.getItem("expenses")) || []
-  );
-
+  const [wallet, setWallet] = useState(Number(localStorage.getItem("wallet")) || 5000);
+  const [expenses, setExpenses] = useState(JSON.parse(localStorage.getItem("expenses")) || []);
   const [showIncomeModal, setShowIncomeModal] = useState(false);
   const [showExpenseModal, setShowExpenseModal] = useState(false);
 
@@ -51,7 +35,6 @@ function App() {
 
     setExpenses([...expenses, expense]);
     setWallet(wallet - expense.price);
-
     enqueueSnackbar("Expense added", { variant: "success" });
     return true;
   };
@@ -88,14 +71,20 @@ function App() {
 
       {/* Add Expense Button */}
       <Box sx={{ mt: 3, textAlign: "center" }}>
-        <Button
-          variant="contained"
-          color="success"
+        <button
           type="button"
           onClick={() => setShowExpenseModal(true)}
+          style={{
+            padding: "0.5rem 1rem",
+            backgroundColor: "#4caf50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
         >
           + Add Expense
-        </Button>
+        </button>
       </Box>
 
       {/* Expense Modal */}
@@ -142,5 +131,7 @@ function App() {
 }
 
 export default App;
+
+
 
 
